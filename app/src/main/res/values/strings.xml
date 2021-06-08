@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GOW_0B</string>
+    <string name="brochure_title_maratish">Kirana Saman</string>
+    <string name="Rs"> \u20B9 Abc</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank brochure fragment</string>
+    <string name="hello_basket_fragment">Hello basket fragment</string>
+    <string name="basket_title_view">Basket</string>
+</resources>
