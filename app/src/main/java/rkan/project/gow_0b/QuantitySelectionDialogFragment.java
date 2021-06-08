@@ -38,30 +38,13 @@ public class QuantitySelectionDialogFragment extends DialogFragment {
             mBBModel = (BrochureBasketModel)savedInstanceState.getSerializable("BBModelPARAM");
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View contentView = getLayoutInflater().inflate(R.layout.layout_dialog, null);
-        NumberPicker quantityPicker = contentView.findViewById(R.id.quantityPicker);
-        quantityPicker.setMinValue(1);
-        quantityPicker.setMaxValue(10);
-        quantityPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-            @Override
-            public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                Log.d("QuantitySelectionDialog", "Was " + i + ", Changed to " + i1);
-            }
-        });
-        quantityPicker.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                Log.d("QuantitySelectionDialog", "Heard from KeyListener");
-                return false;
-            }
-        });
-        builder.setTitle("Put " + mGroceryItem.getItemName() + " in basket")
-                .setView(contentView)
+        UnquantizedNumberPicker quantityPicker = new UnquantizedNumberPicker(getLayoutInflater(), mGroceryItem.getRateUnit());
+        builder.setView(quantityPicker.getRootView())
+                .setTitle("Put " + mGroceryItem.getItemName() + " in basket")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        quantityPicker.clearFocus();
-                        mBBModel.addToBasket(new BasketItem(mGroceryItem, quantityPicker.getValue()));
+                        mBBModel.addToBasket(new BasketItem(mGroceryItem, quantityPicker.getPickerValue()));
                     }
                 })
                 .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {

@@ -19,15 +19,19 @@ public class UnquantizedNumberPicker {
         ((TextView)rootView.findViewById(R.id.unit_view)).setText(unit);
         wholePicker = rootView.findViewById(R.id.whole_picker);
         decimalPicker = rootView.findViewById(R.id.decimal_picker);
-        wholePicker.setMaxValue(99);
+        wholePicker.setMaxValue(10);
         wholePicker.setMinValue(0);
-        decimalPicker.setMaxValue(99);
+        decimalPicker.setMaxValue(9);
         decimalPicker.setMinValue(0);
     }
 
     public double getPickerValue() {
         rootView.clearFocus();
         return wholePicker.getValue() + decimalPicker.getValue()*0.01;
+    }
+
+    public View getRootView () {
+        return rootView;
     }
 
 
