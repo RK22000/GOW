@@ -34,8 +34,7 @@ public class Basket extends ArrayList<BasketItem> {
         if (superClassAdd) {
             super.add(basketItem);
         } else {
-            // TODO: allow add by quantity amount instead of simple increment
-            get(indexOf(basketItem)).incrementQuantity(basketItem.getItemQuantity());
+            get(indexOf(basketItem)).incrementQuantity(basketItem.getRoundedQuantity(2));
         }
         calculateTotalPrice();
         return superClassAdd;

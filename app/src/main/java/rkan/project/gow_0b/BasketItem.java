@@ -38,6 +38,9 @@ public class BasketItem extends GroceryItem {
     public double getItemQuantity() {
         return itemQuantity;
     }
+    public double getRoundedQuantity(int digitsForRounding) {
+        return new BigDecimal(itemQuantity).setScale(digitsForRounding, RoundingMode.HALF_UP).doubleValue();
+    }
 
     public void updateItemQuantity(double itemQuantity) {
         this.itemQuantity = itemQuantity;
