@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Shopping basket
  */
-public class Basket extends ArrayList<BasketItem> {
+public class Basket extends ArrayList<BasketItem> implements Serializable {
     private double totalPrice;
 
     public Basket(){
@@ -34,7 +35,7 @@ public class Basket extends ArrayList<BasketItem> {
         if (superClassAdd) {
             super.add(basketItem);
         } else {
-            get(indexOf(basketItem)).incrementQuantity(basketItem.getRoundedQuantity(2));
+            get(indexOf(basketItem)).incrementQuantity(basketItem.getItemQuantity());
         }
         calculateTotalPrice();
         return superClassAdd;
