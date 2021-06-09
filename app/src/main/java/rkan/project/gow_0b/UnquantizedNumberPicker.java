@@ -13,6 +13,7 @@ public class UnquantizedNumberPicker {
     private boolean inflated = false;
     private View rootView;
     private NumberPicker wholePicker, decimalPicker;
+    private final int decimalRange = 100;
     UnquantizedNumberPicker(LayoutInflater inflater, String unit) {
         mInflater = inflater;
         rootView = inflater.inflate(R.layout.dialog_unquantized, null);
@@ -21,8 +22,15 @@ public class UnquantizedNumberPicker {
         decimalPicker = rootView.findViewById(R.id.decimal_picker);
         wholePicker.setMaxValue(10);
         wholePicker.setMinValue(0);
-        decimalPicker.setMaxValue(9);
+        decimalPicker.setMaxValue(decimalRange-1);
         decimalPicker.setMinValue(0);
+        String[] displayRange = new  String[decimalRange];
+        for (int i = 0; i < decimalRange; i++) {
+            displayRange[i] = "."
+                    + (i<10?"0":"")
+                    + i;
+        }
+        decimalPicker.setDisplayedValues(displayRange);
     }
 
     public double getPickerValue() {

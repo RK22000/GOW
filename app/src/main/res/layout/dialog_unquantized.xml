@@ -39,6 +39,7 @@
         android:layout_marginLeft="8dp"
         android:text="."
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/whole_picker"
         app:layout_constraintEnd_toStartOf="@+id/decimal_picker"
         app:layout_constraintHorizontal_bias="0.5"
