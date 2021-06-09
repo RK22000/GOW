@@ -14,7 +14,7 @@ public class UnquantizedNumberPicker {
     private View rootView;
     private NumberPicker wholePicker, decimalPicker;
     private final int decimalRange = 100;
-    UnquantizedNumberPicker(LayoutInflater inflater, String unit) {
+    UnquantizedNumberPicker(LayoutInflater inflater, String unit, boolean unitQuantized) {
         mInflater = inflater;
         rootView = inflater.inflate(R.layout.dialog_unquantized, null);
         ((TextView)rootView.findViewById(R.id.unit_view)).setText(unit);
@@ -31,6 +31,9 @@ public class UnquantizedNumberPicker {
                     + i;
         }
         decimalPicker.setDisplayedValues(displayRange);
+        if (unitQuantized) {
+            decimalPicker.setVisibility(View.GONE);
+        }
     }
 
     public double getPickerValue() {

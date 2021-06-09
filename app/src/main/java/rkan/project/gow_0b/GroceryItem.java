@@ -42,6 +42,13 @@ public class GroceryItem implements Serializable {
         inBasket = false;
     }
 
+    public boolean itemIsQuantized() {
+        if (rateUnit.toLowerCase().equals("kg")) {
+            return false;
+        }
+        return true;
+    }
+
     public String getItemName() {
         return itemName;
     }

@@ -38,7 +38,9 @@ public class QuantitySelectionDialogFragment extends DialogFragment {
             mBBModel = (BrochureBasketModel)savedInstanceState.getSerializable("BBModelPARAM");
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        UnquantizedNumberPicker quantityPicker = new UnquantizedNumberPicker(getLayoutInflater(), mGroceryItem.getRateUnit());
+        UnquantizedNumberPicker quantityPicker = new UnquantizedNumberPicker(getLayoutInflater(),
+                mGroceryItem.getRateUnit(),
+                mGroceryItem.itemIsQuantized());
         builder.setView(quantityPicker.getRootView())
                 .setTitle("Put " + mGroceryItem.getItemName() + " in basket")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
