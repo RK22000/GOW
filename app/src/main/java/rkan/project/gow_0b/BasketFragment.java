@@ -66,6 +66,27 @@ public class BasketFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // TODO eliminate the cast
         mParentActivity = (MainActivity)getArguments().getSerializable(ARG_PARAM1);
+        BrochureBasketModel bbModel = new ViewModelProvider(mParentActivity).get(BrochureBasketModel.class);
+        BasketExporter basketFileReader = new BasketExporter(new Basket(),
+                requireActivity().getFilesDir());
+        if (basketFileReader.readBasketObject()) {
+            bbModel.setBasketLiveData(basketFileReader.getBasket());
+            Log.d("BasketFragment", "Basket Read from File\n" +bbModel.getBasketLiveData().getValue());
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        Basket basketItems = new ViewModelProvider(mParentActivity)
+                .get(BrochureBasketModel.class)
+                .getBasketLiveData()
+                .getValue();
+        BasketExporter basketSaver = new BasketExporter(
+                basketItems,
+                requireActivity().getFilesDir());
+        basketSaver.saveBasketObject();
+        Log.d("BasketFragment", "Basket saved to file\n" + basketItems );
+        super.onDestroy();
     }
 
     @Override
@@ -122,6 +143,8 @@ public class BasketFragment extends Fragment {
             BasketExporter exporter = new BasketExporter(
                     brochureBasketModel.getBasketLiveData().getValue(),
                     requireContext().getCacheDir());
+            Log.d("BasketFragment", "Exporting Basket\n" + brochureBasketModel.getBasketLiveData().getValue());
+
             exporter.export();
             Toast.makeText(requireContext(), "Exported basket", Toast.LENGTH_SHORT).show();
             shareFileToOutside(exporter.getExportedFile());

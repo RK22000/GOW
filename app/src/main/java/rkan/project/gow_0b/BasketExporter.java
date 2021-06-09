@@ -38,6 +38,10 @@ public class BasketExporter {
         }
     }
 
+    public Basket getBasket() {
+        return mBasket;
+    }
+
     public boolean saveBasketObject() {
         try {
             FileOutputStream fos = new FileOutputStream(mOutPutFile);

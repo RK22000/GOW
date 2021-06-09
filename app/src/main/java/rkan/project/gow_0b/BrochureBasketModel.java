@@ -71,6 +71,9 @@ public class BrochureBasketModel extends ViewModel implements Serializable {
     public LiveData<Basket> getBasketLiveData() {
         return basketLiveData;
     }
+    public void setBasketLiveData(Basket basket) {
+        basketLiveData.setValue(basket);
+    }
 
     public LiveData<List<String>> getCategoryLiveData() {
         return categoryLiveData;
