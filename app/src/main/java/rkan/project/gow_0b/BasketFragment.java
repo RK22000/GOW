@@ -76,7 +76,7 @@ public class BasketFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
+    public void onPause() {
         Basket basketItems = new ViewModelProvider(mParentActivity)
                 .get(BrochureBasketModel.class)
                 .getBasketLiveData()
@@ -86,7 +86,7 @@ public class BasketFragment extends Fragment {
                 requireActivity().getFilesDir());
         basketSaver.saveBasketObject();
         Log.d("BasketFragment", "Basket saved to file\n" + basketItems );
-        super.onDestroy();
+        super.onPause();
     }
 
     @Override
