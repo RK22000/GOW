@@ -27,7 +27,7 @@ public class UnquantizedNumberPicker {
 
     public double getPickerValue() {
         rootView.clearFocus();
-        return wholePicker.getValue() + decimalPicker.getValue()*0.01;
+        return wholePicker.getValue() + decimalPicker.getValue()*0.1;
     }
 
     public View getRootView () {
