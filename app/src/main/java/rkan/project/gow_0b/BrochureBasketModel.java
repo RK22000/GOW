@@ -2,10 +2,23 @@ package rkan.project.gow_0b;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +36,7 @@ public class BrochureBasketModel extends ViewModel implements Serializable {
     public BrochureBasketModel() {
         // TODO: setToDemoBrochure could produce null pointer error.
         //  Understand this case
-        initialize();
+        initializeFromFirebaseBucket();
     }
 
     public void initialize() {
@@ -36,6 +49,47 @@ public class BrochureBasketModel extends ViewModel implements Serializable {
             categorySet.add(g.getItemCategory());
         }
         categoryLiveData.setValue(new ArrayList<>(categorySet));
+    }
+
+    public void initializeFromFirebaseBucket(){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReference();
+        StorageReference brochureReference = storageReference.child("BrochureDemo.csv");
+        try {
+            File localFile = File.createTempFile("Local Brochure", "csv");
+            FileReader fileReader = new FileReader(localFile);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            brochureReference.getFile(localFile).addOnSuccessListener(
+                    new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            try {
+                                String line;
+                                String[] item = new String[10]; // I only need 4
+                                Brochure brochure = new Brochure();
+                                bufferedReader.readLine();
+                                while ((line=bufferedReader.readLine()) != null)  {
+                                    Log.d("BrochureBasketModel", line);
+                                    item = line.split(",");
+                                    brochure.add(new GroceryItem(item[1], item[0], item[3], Double.parseDouble(item[2])));
+                                }
+                                brochureLiveData.setValue(brochure);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    })
+                    .addOnFailureListener(
+                            new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull @NotNull Exception e) {
+                                    e.printStackTrace();
+                                }
+                            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean addToBasket(BasketItem basketItem) {
