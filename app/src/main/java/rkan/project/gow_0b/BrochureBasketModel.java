@@ -42,6 +42,11 @@ public class BrochureBasketModel extends ViewModel implements Serializable {
     public void initialize() {
         brochureLiveData.setValue(brochureLiveData.getValue().setToDemoBrochure());
         Log.d("BrochBasketModel", "Brochure initialized to demo brochure of size = " + brochureLiveData.getValue().size());
+        categorizeBrochure();
+    }
+
+    // TODO: make this a method of the basket so category list is obtained from the basket
+    private void categorizeBrochure() {
         TreeSet<String> categorySet = new TreeSet<>();
         categorySet.add("All Categories");
         for (GroceryItem g :
@@ -65,7 +70,7 @@ public class BrochureBasketModel extends ViewModel implements Serializable {
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                             try {
                                 String line;
-                                String[] item = new String[10]; // I only need 4
+                                String[] item; // = new String[10]; // I only need 4
                                 Brochure brochure = new Brochure();
                                 bufferedReader.readLine();
                                 while ((line=bufferedReader.readLine()) != null)  {
@@ -74,6 +79,7 @@ public class BrochureBasketModel extends ViewModel implements Serializable {
                                     brochure.add(new GroceryItem(item[1], item[0], item[3], Double.parseDouble(item[2])));
                                 }
                                 brochureLiveData.setValue(brochure);
+                                categorizeBrochure();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
