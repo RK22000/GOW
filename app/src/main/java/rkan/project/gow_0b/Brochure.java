@@ -4,11 +4,25 @@ import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
-public class Brochure extends ArrayList<GroceryItem> {
+/**
+ * This is just to see if documentations works here.
+ * Does it?
+ */
+public class Brochure extends ArrayList<GroceryItem> implements Serializable {
+
+    private long lastUpdatedOnFirebase;
+
+    public long getLastUpdatedOnFirebase() {
+        return lastUpdatedOnFirebase;
+    }
+    public void setLastUpdatedOnFirebase(long lastUpdated) {
+        lastUpdatedOnFirebase = lastUpdated;
+    }
 
     public Brochure setToDemoBrochure() {
         String[] vegetables = {"Cucumbers", "Tomatoes", "Carrots", "Beetroot"},
