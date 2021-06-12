@@ -1,16 +1,15 @@
 package rkan.project.gow_0b;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
@@ -19,11 +18,7 @@ import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,88 +35,61 @@ public class BrochureBasketModel extends AndroidViewModel implements Serializabl
 
     private final File filesDir;
     private final StorageReference storageReference;
+    private final SharedPreferences preferences;
+    private final String STORAGE_FILE = "BrochureDemo.csv";
+    private final String BROCHURE_FILE = "BrochureDemo.csv";
+    private final String BROCHURE_UPDATE_KEY = "Brochure Update Metadata";
 
     public BrochureBasketModel(@NonNull @NotNull Application application) {
         super(application);
         filesDir = application.getFilesDir();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        initializeFromFirebaseBucket();
+        preferences = application.getSharedPreferences("rkan.project.gow_0b.PREFERENCE_FILE_KEY",
+                Context.MODE_PRIVATE);
+        initializeBrochure3();
     }
 
-    public boolean initializeBrochure() {
-        File brochureFile = new File(filesDir, "BrochureObjectFile");
-        BBFileIO<Brochure> brochureFileIO = new BBFileIO<>(new Brochure(), brochureFile);
-        Brochure localBrochure = brochureFileIO.getSubject();
-        StorageReference brochureReference = storageReference.child("BrochureDemo.csv");
+    public boolean initializeBrochure3() {
+        final File localFile = new File(filesDir, BROCHURE_FILE);
+        setLiveBrochureFromFile(localFile);
+
+
+        final long updateMills = preferences.getLong(BROCHURE_UPDATE_KEY, 0);
+        StorageReference brochureReference = storageReference.child(STORAGE_FILE);
+        Log.d("BrochureBasketModel", "Getting  meta data");
         brochureReference.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
             @Override
             public void onSuccess(StorageMetadata storageMetadata) {
-                if (storageMetadata.getUpdatedTimeMillis() != localBrochure.getLastUpdatedOnFirebase()) {
-                    Log.d("BrochureBasketModel", "Brochure is out of sync");
-                    // sync localBrochure with firebase Brochure
-                    syncBrochureWithFirebaseStorage(localBrochure, brochureReference);
-                    // set update time in localBrochure
-                    localBrochure.setLastUpdatedOnFirebase(storageMetadata.getUpdatedTimeMillis());
+                if (storageMetadata.getUpdatedTimeMillis() != updateMills) {
+                    Log.d("BrochureBasketModel", "Downloading brochure");
+                    brochureReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            setLiveBrochureFromFile(localFile);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putLong(BROCHURE_UPDATE_KEY,storageMetadata.getUpdatedTimeMillis());
+                            editor.apply();
+                        }
+                    });
                 } else {
-                    // nothing
+                    Log.d("BrochureBasketModel", "Not downloading");
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                e.printStackTrace();
-                Toast.makeText(getApplication().getApplicationContext(), "Failed to sync with online brochure", Toast.LENGTH_SHORT).show();
-            }
-        });
-        brochureLiveData.setValue(localBrochure);
-        return false;
-    }
 
-    public boolean syncBrochureWithFirebaseStorage(Brochure brochure, StorageReference storageBrochure) {
-        File            tmpF = null;
-        FileReader      fr = null;
-        BufferedReader  br = null;
-        try {
-            tmpF = File.createTempFile("TempBrochureSyncFile", ".csv", getApplication().getCacheDir());
-            fr = new FileReader(tmpF);
-            br = new BufferedReader(fr);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        BufferedReader finalBr = br;
-        storageBrochure.getFile(tmpF).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                String line;
-                String[] item; // = new String[10]; // I only need 4
-                try {
-                    finalBr.readLine();
-                    while ((line = finalBr.readLine()) != null) {
-                        Log.d("BrochureBasketModel", line);
-                        item = line.split(",");
-                        brochure.add(new GroceryItem(item[1], item[0], item[3], Double.parseDouble(item[2])));
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull @NotNull Exception e) {
-                e.printStackTrace();
             }
         });
         return true;
     }
-
-    public void initialize() {
-        brochureLiveData.setValue(brochureLiveData.getValue().setToDemoBrochure());
-        Log.d("BrochBasketModel", "Brochure initialized to demo brochure of size = " + brochureLiveData.getValue().size());
-        categorizeBrochure();
+    private boolean setLiveBrochureFromFile(File file) {
+        Brochure brochure = new Brochure();
+        if (BBFileIO.readBrochureFile(brochure, file)) {
+            brochureLiveData.setValue(brochure);
+            categorizeBrochure();
+            return true;
+        }
+        return false;
     }
+
 
     // TODO: make this a method of the basket so category list is obtained from the basket
     private void categorizeBrochure() {
@@ -134,47 +102,6 @@ public class BrochureBasketModel extends AndroidViewModel implements Serializabl
         categoryLiveData.setValue(new ArrayList<>(categorySet));
     }
 
-    public void initializeFromFirebaseBucket(){
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference();
-        StorageReference brochureReference = storageReference.child("BrochureDemo.csv");
-        try {
-            File localFile = File.createTempFile("Local Brochure", "csv");
-            FileReader fileReader = new FileReader(localFile);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            brochureReference.getFile(localFile).addOnSuccessListener(
-                    new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            try {
-                                String line;
-                                String[] item; // = new String[10]; // I only need 4
-                                Brochure brochure = new Brochure();
-                                bufferedReader.readLine();
-                                while ((line=bufferedReader.readLine()) != null)  {
-                                    Log.d("BrochureBasketModel", line);
-                                    item = line.split(",");
-                                    brochure.add(new GroceryItem(item[1], item[0], item[3], Double.parseDouble(item[2])));
-                                }
-                                brochureLiveData.setValue(brochure);
-                                categorizeBrochure();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                    })
-                    .addOnFailureListener(
-                            new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull @NotNull Exception e) {
-                                    e.printStackTrace();
-                                }
-                            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public boolean addToBasket(BasketItem basketItem) {
         Basket newBasket = basketLiveData.getValue();

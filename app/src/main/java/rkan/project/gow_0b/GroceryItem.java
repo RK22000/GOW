@@ -96,7 +96,7 @@ public class GroceryItem implements Serializable {
                 .append(" ")
                 .append(getRoundedItemRate(2))
                 .append("\u20B9");
-        if (rateUnit != null) {
+        if (rateUnit != null && !rateUnit.equals("")) {  // notNull and not""
             itemString.append("/")
                     .append(rateUnit);
         }
