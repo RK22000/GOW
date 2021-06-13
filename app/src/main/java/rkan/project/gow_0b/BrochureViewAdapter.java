@@ -23,7 +23,7 @@ public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHo
     private final LiveData<Brochure>    mLiveBrochure;
     //private final QuantitySelectionDialogFragment mDialog;
     private final FragmentActivity      mParentFragment;
-    private String filter;
+    private String categoryFilter, filter;
     private Brochure mFilteredBrochure;
 
     public BrochureViewAdapter(LayoutInflater inflater, FragmentActivity vMStoreOwner) {
@@ -31,7 +31,7 @@ public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHo
         mBBModel = new ViewModelProvider(vMStoreOwner).get(BrochureBasketModel.class);
         mLiveBrochure = mBBModel.getBrochureLiveData();
         mParentFragment = vMStoreOwner;
-        filter = null;
+        categoryFilter = null;
         mLiveBrochure.observe(vMStoreOwner, new Observer<Brochure>() {
             @Override
             public void onChanged(Brochure brochure) {
@@ -40,9 +40,16 @@ public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHo
         });
     }
 
-    public void setFilter(String newFilter){
-        filter = newFilter;
-        if (filter.equals("All Categories")) {
+    public void setCategoryFilter(String newFilter){
+        categoryFilter = newFilter;
+        if (categoryFilter.equals("All Categories")) {
+            categoryFilter = null;
+        }
+        setmFilteredBrochure();
+    }
+    public void setFilter(String filterString) {
+        filter = filterString.toLowerCase();
+        if (filter.trim().equals("")) {
             filter = null;
         }
         setmFilteredBrochure();
@@ -51,7 +58,9 @@ public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHo
         mFilteredBrochure = new Brochure();
         for (GroceryItem g :
                 mLiveBrochure.getValue()) {
-            if (filter == null || g.getItemCategory().equals(filter)) {
+            if ((categoryFilter == null || g.getItemCategory().equals(categoryFilter))
+                    && (filter == null || g.getItemFullName().toLowerCase().contains(filter))
+            ) {
                 mFilteredBrochure.add(g);
             }
         }

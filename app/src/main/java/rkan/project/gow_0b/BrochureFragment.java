@@ -1,11 +1,14 @@
 package rkan.project.gow_0b;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -76,7 +79,7 @@ public class BrochureFragment extends Fragment {
                 new FilterCallback() {
                     @Override
                     public void onCallBack(String category) {
-                        mBrochureViewAdapter.setFilter(category);
+                        mBrochureViewAdapter.setCategoryFilter(category);
                         mBrochureRecycler.setAdapter(mBrochureViewAdapter);
                         Log.d("BrochureFragment", "CallBack Received: " + category);
                         String brochureTitle = category.equals("All Categories")?
@@ -93,7 +96,23 @@ public class BrochureFragment extends Fragment {
             }
         });
 
+        EditText filterTextView = view.findViewById(R.id.filterText);
+        filterTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mBrochureViewAdapter.setFilter(s.toString());
+            }
+        });
     }
 }
 
