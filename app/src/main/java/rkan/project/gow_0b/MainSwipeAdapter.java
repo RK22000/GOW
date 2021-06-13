@@ -26,9 +26,9 @@ public class MainSwipeAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return BasketFragment.newInstance(mParentActivity);
-            default:
                 return BrochureFragment.newInstance(mParentActivity);
+            default:
+                return BasketFragment.newInstance(mParentActivity);
         }
     }
 
