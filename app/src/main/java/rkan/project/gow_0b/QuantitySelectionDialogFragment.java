@@ -41,6 +41,14 @@ public class QuantitySelectionDialogFragment extends DialogFragment {
         UnquantizedNumberPicker quantityPicker = new UnquantizedNumberPicker(getLayoutInflater(),
                 mGroceryItem.getRateUnit(),
                 mGroceryItem.itemIsQuantized());
+        if (getTag().equals(BasketViewAdapter.DIALOG_TAG)) {
+            try {
+                BasketItem basketItem = (BasketItem) mGroceryItem;
+                quantityPicker.setPickerValue(basketItem.getItemQuantity());
+            } catch (ClassCastException e) {
+                e.printStackTrace();
+            }
+        }
         builder.setView(quantityPicker.getRootView())
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override

@@ -46,5 +46,9 @@ public class UnquantizedNumberPicker {
         return rootView;
     }
 
+    public void setPickerValue (double value) {
+        wholePicker.setValue((int)Math.floor(value));
+        decimalPicker.setValue((int)(Math.floor(value*decimalRange))%decimalRange);
+    }
 
 }
