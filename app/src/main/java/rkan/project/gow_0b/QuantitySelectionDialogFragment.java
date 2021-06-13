@@ -53,7 +53,15 @@ public class QuantitySelectionDialogFragment extends DialogFragment {
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        mBBModel.addToBasket(new BasketItem(mGroceryItem, quantityPicker.getPickerValue()));
+                        if (quantityPicker.getPickerValue() == 0){
+                            mBBModel.removeFromBasket(mBBModel
+                                    .getBasketLiveData()
+                                    .getValue()
+                                    .indexOf(mGroceryItem)
+                            );
+                        } else {
+                            mBBModel.addToBasket(new BasketItem(mGroceryItem, quantityPicker.getPickerValue()));
+                        }
                     }
                 })
                 .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
