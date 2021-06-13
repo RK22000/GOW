@@ -27,11 +27,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 new MainSwipeAdapter(getSupportFragmentManager(), this);
         brochureBasketPager.setAdapter(mainSwipeAdapter);
         Toolbar toolbar = findViewById(R.id.appBar);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setSupportActionBar(toolbar);
-        } else {
-            //Nothing for now
-        }
+        setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             /**
              * This method will be invoked when a menu item is clicked if the item itself did
