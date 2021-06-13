@@ -47,6 +47,14 @@ public class BrochureBasketModel extends AndroidViewModel implements Serializabl
         storageReference = storage.getReference();
         preferences = application.getSharedPreferences("rkan.project.gow_0b.PREFERENCE_FILE_KEY",
                 Context.MODE_PRIVATE);
+
+        BasketExporter basketFileReader = new BasketExporter(new Basket(),
+                filesDir);
+        if (basketFileReader.readBasketObject()) {
+            setBasketLiveData(basketFileReader.getBasket());
+            Log.d("BrochureBasketModel", "Basket Read from File\n" +getBasketLiveData().getValue());
+        }
+
         initializeBrochure3();
     }
 
@@ -142,5 +150,11 @@ public class BrochureBasketModel extends AndroidViewModel implements Serializabl
 
     public LiveData<List<String>> getCategoryLiveData() {
         return categoryLiveData;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        Log.d("BrochureBasketModel", "AndroidViewModel was finalized");
+        super.finalize();
     }
 }

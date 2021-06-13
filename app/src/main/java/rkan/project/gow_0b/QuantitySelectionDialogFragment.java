@@ -42,7 +42,6 @@ public class QuantitySelectionDialogFragment extends DialogFragment {
                 mGroceryItem.getRateUnit(),
                 mGroceryItem.itemIsQuantized());
         builder.setView(quantityPicker.getRootView())
-                .setTitle("Put " + mGroceryItem.getItemName() + " in basket")
                 .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -55,7 +54,11 @@ public class QuantitySelectionDialogFragment extends DialogFragment {
 
                     }
                 });
-        MainActivity.dialog = this;
+        if (getTag().equals(BasketViewAdapter.DIALOG_TAG)) {
+            builder.setTitle("Change " + mGroceryItem.getItemName() + " quantity");
+        } else if (getTag().equals(BrochureViewAdapter.DIALOG_TAG)){
+            builder.setTitle("Add " + mGroceryItem.getItemName() + " in basket");
+        }
         return builder.create();
     }
 

@@ -70,10 +70,8 @@ public class BasketItem extends GroceryItem {
     public @NotNull String toString() {
         StringBuilder itemString = new StringBuilder()
                 .append(itemQuantity);
-        if (getRateUnit() != null) {
-            if (getRateUnit().equals("gaddi")) {
-                itemString.append(" ");
-            }
+        if (getRateUnit() != null && !getRateUnit().equals("")) {
+            itemString.append(" ");
             itemString.append(getRateUnit());
         }
         itemString

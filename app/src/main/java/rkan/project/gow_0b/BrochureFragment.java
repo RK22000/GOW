@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -74,10 +75,14 @@ public class BrochureFragment extends Fragment {
         CategoryViewAdapter categoryViewAdapter = new CategoryViewAdapter(requireActivity(),
                 new FilterCallback() {
                     @Override
-                    public void onCallBack(String filter) {
-                        mBrochureViewAdapter.setFilter(filter);
+                    public void onCallBack(String category) {
+                        mBrochureViewAdapter.setFilter(category);
                         mBrochureRecycler.setAdapter(mBrochureViewAdapter);
-                        Log.d("BrochureFragment", "CallBack Received: " + filter);
+                        Log.d("BrochureFragment", "CallBack Received: " + category);
+                        String brochureTitle = category.equals("All Categories")?
+                                getString(R.string.brochure_title_maratish):
+                                category;
+                        ((TextView)view.findViewById(R.id.brochureTitleView)).setText(brochureTitle);
                     }
                 });
         Button categoryButton = view.findViewById(R.id.category_button);

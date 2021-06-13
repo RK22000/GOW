@@ -67,12 +67,6 @@ public class BasketFragment extends Fragment {
         // TODO eliminate the cast
         mParentActivity = (MainActivity)getArguments().getSerializable(ARG_PARAM1);
         BrochureBasketModel bbModel = new ViewModelProvider(mParentActivity).get(BrochureBasketModel.class);
-        BasketExporter basketFileReader = new BasketExporter(new Basket(),
-                requireActivity().getFilesDir());
-        if (basketFileReader.readBasketObject()) {
-            bbModel.setBasketLiveData(basketFileReader.getBasket());
-            Log.d("BasketFragment", "Basket Read from File\n" +bbModel.getBasketLiveData().getValue());
-        }
     }
 
     @Override
@@ -148,20 +142,6 @@ public class BasketFragment extends Fragment {
             exporter.export();
             Toast.makeText(requireContext(), "Exported basket", Toast.LENGTH_SHORT).show();
             shareFileToOutside(exporter.getExportedFile());
-            /*
-            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-            //sharingIntent.setType(URLConnection.guessContentTypeFromName(exporter.getExportedFile().getName()));
-            // TODO: exporter.getExportedFile could cause a null pointer error
-            //sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://rkan.project.gow_0a/cache/Basket_export_file.txt"));
-            //sharingIntent.putExtra(Intent.EXTRA_STREAM,
-                    //Uri.parse("content://" + exporter.getExportedFile().getAbsolutePath()));
-            //sharingIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            //sharingIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, brochureBasketModel.getBasketLiveData().getValue().toString());
-            sharingIntent.setType("text/plain");
-            Log.d("BasketFragment", exporter.getExportedFile().getAbsolutePath());
-            startActivity(Intent.createChooser(sharingIntent, "share file/text with"));
-             */
         });
 
         exportButton = view.findViewById(R.id.exportTextButton);

@@ -11,7 +11,6 @@ import java.io.Serializable;
 
 public class MainActivity extends AppCompatActivity implements Serializable {
 
-    static DialogFragment dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

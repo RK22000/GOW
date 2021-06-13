@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHolder>{
 
+    public static final String DIALOG_TAG = "From Brochure";
     private final LayoutInflater        mInflater;
     private final BrochureBasketModel mBBModel;
     private final LiveData<Brochure>    mLiveBrochure;
@@ -73,17 +74,8 @@ public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHo
         holder.setOnClickListener(view -> {
             QuantitySelectionDialogFragment dialogFragment = new
                     QuantitySelectionDialogFragment(holder.getGroceryItem(), mBBModel);
-            dialogFragment.show(mParentFragment.getSupportFragmentManager(), "quantity");
-            BasketItem newAddition = new BasketItem(holder.getGroceryItem(), 1);
-            //mBBModel.addToBasket(newAddition);
+            dialogFragment.show(mParentFragment.getSupportFragmentManager(), DIALOG_TAG);
         });
-        /*
-        if (mBBModel.getBasketLiveData().getValue().contains(holder.getGroceryItem())) {
-            Log.d("OnBindBrochureHolder", "Attempt to mark item at " + position + " was "
-            + holder.markAsInBasket());
-        }
-
-         */
     }
 
     @Override

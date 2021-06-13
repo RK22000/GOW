@@ -35,7 +35,8 @@ public class Basket extends ArrayList<BasketItem> implements Serializable {
         if (superClassAdd) {
             super.add(basketItem);
         } else {
-            get(indexOf(basketItem)).incrementQuantity(basketItem.getItemQuantity());
+            //get(indexOf(basketItem)).incrementQuantity(basketItem.getItemQuantity());
+            set(indexOf(basketItem), basketItem);
         }
         calculateTotalPrice();
         return superClassAdd;

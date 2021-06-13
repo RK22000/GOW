@@ -6,6 +6,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
@@ -17,10 +20,13 @@ public class BasketViewAdapter extends RecyclerView.Adapter<BasketItemViewHolder
     private final LayoutInflater        mInflater;
     private final BrochureBasketModel mBBModel;
     private final LiveData<Basket>      mLiveBasket;
-    public BasketViewAdapter(LayoutInflater inflater, ViewModelStoreOwner vMStoreOwner) {
+    private final FragmentActivity      mParentFragment;
+    public static final String DIALOG_TAG = "From Basket";
+    public BasketViewAdapter(LayoutInflater inflater, FragmentActivity vMStoreOwner) {
         this.mInflater = inflater;
         mBBModel = new ViewModelProvider(vMStoreOwner).get(BrochureBasketModel.class);
         mLiveBasket = mBBModel.getBasketLiveData();
+        mParentFragment = vMStoreOwner;
     }
 
     @NonNull
@@ -35,6 +41,14 @@ public class BasketViewAdapter extends RecyclerView.Adapter<BasketItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull @NotNull BasketItemViewHolder holder, int position) {
         holder.initialize(mLiveBasket.getValue().get(position));
+        holder.getView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QuantitySelectionDialogFragment dialogFragment = new
+                        QuantitySelectionDialogFragment(holder.getBasketItem(), mBBModel);
+                dialogFragment.show(mParentFragment.getSupportFragmentManager(), DIALOG_TAG);
+            }
+        });
     }
 
     @Override
@@ -57,5 +71,8 @@ class BasketItemViewHolder extends RecyclerView.ViewHolder {
     }
     public BasketItem getBasketItem() {
         return mBasketItem;
+    }
+    public View getView() {
+        return mHolderView;
     }
 }

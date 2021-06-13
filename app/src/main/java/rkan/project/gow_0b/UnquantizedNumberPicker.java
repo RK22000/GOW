@@ -14,13 +14,14 @@ public class UnquantizedNumberPicker {
     private View rootView;
     private NumberPicker wholePicker, decimalPicker;
     private final int decimalRange = 100;
+    private final int wholeRange = 100;
     UnquantizedNumberPicker(LayoutInflater inflater, String unit, boolean unitQuantized) {
         mInflater = inflater;
         rootView = inflater.inflate(R.layout.dialog_unquantized, null);
         ((TextView)rootView.findViewById(R.id.unit_view)).setText(unit);
         wholePicker = rootView.findViewById(R.id.whole_picker);
         decimalPicker = rootView.findViewById(R.id.decimal_picker);
-        wholePicker.setMaxValue(10);
+        wholePicker.setMaxValue(wholeRange-1);
         wholePicker.setMinValue(0);
         decimalPicker.setMaxValue(decimalRange-1);
         decimalPicker.setMinValue(0);
