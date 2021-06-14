@@ -6,17 +6,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.card.MaterialCardView;
 
 import org.jetbrains.annotations.NotNull;
 
-public class BasketViewAdapter extends RecyclerView.Adapter<BasketItemViewHolder> {
+public class BasketViewAdapter extends RecyclerView.Adapter<BasketItemCardViewHolder> {
     private final LayoutInflater        mInflater;
     private final BrochureBasketModel mBBModel;
     private final LiveData<Basket>      mLiveBasket;
@@ -32,14 +31,14 @@ public class BasketViewAdapter extends RecyclerView.Adapter<BasketItemViewHolder
     @NonNull
     @NotNull
     @Override
-    public BasketItemViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent
+    public BasketItemCardViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent
             , int viewType) {
-        View basketItemView = mInflater.inflate(R.layout.grocery_item_view, parent, false);
-        return new BasketItemViewHolder(basketItemView);
+        MaterialCardView basketItemView = BasketItemCardViewHolder.inflate(mInflater, parent);
+        return new BasketItemCardViewHolder(basketItemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull BasketItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull BasketItemCardViewHolder holder, int position) {
         holder.initialize(mLiveBasket.getValue().get(position));
         holder.getView().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,22 +56,34 @@ public class BasketViewAdapter extends RecyclerView.Adapter<BasketItemViewHolder
     }
 }
 
+class BasketItemCardViewHolder extends RecyclerView.ViewHolder {
 
-class BasketItemViewHolder extends RecyclerView.ViewHolder {
+    MaterialCardView mHolderView;
     BasketItem mBasketItem;
-    View mHolderView;
-    public BasketItemViewHolder(@NonNull @NotNull View itemView) {
+
+    public static MaterialCardView inflate(LayoutInflater inflater, ViewGroup parent) {
+        return (MaterialCardView) inflater.inflate(R.layout.cardview_basket_item, parent, false);
+    }
+    public BasketItemCardViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
-        mHolderView = itemView;
+        mHolderView = (MaterialCardView) itemView;
     }
-    public void initialize(BasketItem basketItem) {
-        mBasketItem = basketItem;
-        ((TextView)mHolderView.findViewById(R.id.groceryText)).setText(mBasketItem.toString());
+    public void initialize(BasketItem item) {
+        ((TextView) mHolderView.findViewById(R.id.quantity_view))
+                .setText(Double.toString(item.getRoundedQuantity(2)) + item.getRateUnit());
+        ((TextView) mHolderView.findViewById(R.id.basket_item_view))
+                .setText(item.getItemName());
+        ((TextView) mHolderView.findViewById(R.id.basket_category_view))
+                .setText(item.getItemCategory());
+        ((TextView) mHolderView.findViewById(R.id.item_cost_view))
+                .setText("\u20B9" + Double.toString(item.getRoundedPrice(2)));
     }
+    public MaterialCardView getView() {
+        return mHolderView;
+    }
+
     public BasketItem getBasketItem() {
         return mBasketItem;
     }
-    public View getView() {
-        return mHolderView;
-    }
 }
+

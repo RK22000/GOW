@@ -1,39 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
 
     <RelativeLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/quantity_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="false"
-            android:text="42"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="42 kg"
+            android:textAppearance="?attr/textAppearanceHeadline6" />
 
         <TextView
             android:id="@+id/basket_item_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/quantity_view"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/quantity_view"
             android:text="Brinjal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+            android:textAppearance="?attr/textAppearanceHeadline6"/>
 
         <TextView
             android:id="@+id/basket_category_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/basket_item_view"
-            android:layout_toRightOf="@id/quantity_view"
             android:text="Vegetables"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"/>
+        <TextView
+            android:id="@+id/item_cost_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:text="@string/Rs"
+            android:layout_below="@id/quantity_view"
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
