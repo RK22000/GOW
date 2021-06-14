@@ -17,7 +17,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:text="42 kg"
-            android:textAppearance="?attr/textAppearanceHeadline6" />
+            style="@style/Theme.Mat_1.CardViewHeading" />
 
         <TextView
             android:id="@+id/basket_item_view"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="Brinjal"
-            android:textAppearance="?attr/textAppearanceHeadline6"/>
+            style="@style/Theme.Mat_1.CardViewHeading"/>
 
         <TextView
             android:id="@+id/basket_category_view"
@@ -33,14 +33,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/basket_item_view"
             android:text="Vegetables"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="?android:attr/textColorSecondary"/>
+            style="@style/Theme.Mat_1.CardViewSubHeading"/>
         <TextView
             android:id="@+id/item_cost_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:textAppearance="?attr/textAppearanceBody2"
+            style="@style/Theme.Mat_1.CardViewSubHeading"
             android:text="@string/Rs"
             android:layout_below="@id/quantity_view"
             android:layout_alignParentRight="true" />
