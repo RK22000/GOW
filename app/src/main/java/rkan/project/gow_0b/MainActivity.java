@@ -32,20 +32,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         final MainSwipeAdapter mainSwipeAdapter =
                 new MainSwipeAdapter(getSupportFragmentManager(), this);
         brochureBasketPager.setAdapter(mainSwipeAdapter);
-        Toolbar toolbar = findViewById(R.id.appBar);
-        setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.basket_option:
-                        brochureBasketPager.setCurrentItem(1);
-                        return true;
-                }
-                return false;
-            }
-        });
-
         TabLayout bbTabs = findViewById(R.id.bbTabLayout);
         new TabLayoutMediator(bbTabs, brochureBasketPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override

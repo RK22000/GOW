@@ -14,5 +14,5 @@
     <color name="secondaryColor">#8d6e63</color>
     <color name="secondaryLightColor">#be9c91</color>
     <color name="secondaryDarkColor">#5f4339</color>
-    <color name="primaryTextColor">#000000</color>
+    <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#ffffff</color></resources>
