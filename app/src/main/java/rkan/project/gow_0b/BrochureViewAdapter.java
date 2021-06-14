@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
-public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHolder>{
+public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHolder>
+implements FilterAdapter{
 
     public static final String DIALOG_TAG = "From Brochure";
     private final LayoutInflater        mInflater;
@@ -47,6 +49,8 @@ public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHo
         }
         setmFilteredBrochure();
     }
+
+    @Override
     public void setFilter(String filterString) {
         filter = filterString.toLowerCase();
         if (filter.trim().equals("")) {
@@ -64,6 +68,7 @@ public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHo
                 mFilteredBrochure.add(g);
             }
         }
+        notifyDataSetChanged();
     }
 
 

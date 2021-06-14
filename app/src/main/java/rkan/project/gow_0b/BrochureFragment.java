@@ -1,12 +1,15 @@
 package rkan.project.gow_0b;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -62,7 +65,6 @@ public class BrochureFragment extends Fragment {
 
         RecyclerView mBrochureRecycler = view.findViewById(R.id.brochureRecyclerView);
         mBrochureViewAdapter = new BrochureViewAdapter(getLayoutInflater(), requireActivity());
-        mBrochureRecycler.setAdapter(mBrochureViewAdapter);
         mBrochureRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
@@ -97,23 +99,40 @@ public class BrochureFragment extends Fragment {
         });
 
         EditText filterTextView = view.findViewById(R.id.filterText);
+
         filterTextView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                Log.d("BrochureFragment", "Filtering: " + s);
+                ((FilterAdapter)mBrochureRecycler.getAdapter()).setFilter(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                mBrochureViewAdapter.setFilter(s.toString());
+                Log.d("BrochureFragment", "AfterTextChanged: " + s );
             }
         });
+        filterTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                Log.d("BrochureFragment", "EditorAction happened");
+                //filterTextView.clearFocus();
+                hideKeyboard();
+                filterTextView.clearFocus();
+                return true;
+            }
+        });
+        mBrochureRecycler.setAdapter(categoryViewAdapter);
     }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(requireActivity().getCurrentFocus().getWindowToken(), 0);
+    }
+
 }
 
 interface FilterCallback {
