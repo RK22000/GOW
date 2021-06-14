@@ -131,9 +131,6 @@ public class BrochureBasketModel extends AndroidViewModel implements Serializabl
         Basket newBasket = basketLiveData.getValue();
         BasketItem removedItem = newBasket.remove(index);
         basketLiveData.setValue(newBasket);
-        Brochure newBrochure = brochureLiveData.getValue();
-        newBrochure.get(newBrochure.indexOf(removedItem)).inBasket = false;
-        brochureLiveData.setValue(newBrochure);
         return removedItem;
     }
 

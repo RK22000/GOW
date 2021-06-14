@@ -1,5 +1,7 @@
 package rkan.project.gow_0b;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
  * Shopping basket
  */
 public class Basket extends ArrayList<BasketItem> implements Serializable {
+    private String LOG_TAG = "Basket class";
     private double totalPrice;
 
     public Basket(){
@@ -44,6 +47,10 @@ public class Basket extends ArrayList<BasketItem> implements Serializable {
 
     @Override
     public BasketItem remove(int index) {
+        if (index < 0) {
+            Log.w(LOG_TAG, "Attempted to remove object at index " + index);
+            return null;
+        }
         BasketItem removedItem = super.remove(index);
         calculateTotalPrice();
         return removedItem;
