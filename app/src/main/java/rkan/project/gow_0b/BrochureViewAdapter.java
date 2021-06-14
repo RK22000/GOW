@@ -8,11 +8,14 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.card.MaterialCardView;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -100,10 +103,10 @@ implements FilterAdapter{
 
 class BrochureItemViewHolder extends RecyclerView.ViewHolder {
     GroceryItem mBrochureItem;
-    View mHolderView;
+    MaterialCardView mHolderView;
     public BrochureItemViewHolder(@NonNull @NotNull View itemView) {
         super(itemView);
-        mHolderView = itemView;
+        mHolderView = (MaterialCardView)itemView;
     }
     public void initialize(GroceryItem groceryItem) {
         mBrochureItem = groceryItem;
@@ -124,6 +127,7 @@ class BrochureItemViewHolder extends RecyclerView.ViewHolder {
 
     public boolean markIfInBasket(boolean inBasket) {
         TextView display = mHolderView.findViewById(R.id.groceryText);
+        mHolderView.setChecked(inBasket);
         if (inBasket) {
             display.setTextColor(Color.GREEN);
             return true;
