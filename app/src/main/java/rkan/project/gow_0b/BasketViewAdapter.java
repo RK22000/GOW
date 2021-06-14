@@ -69,6 +69,7 @@ class BasketItemCardViewHolder extends RecyclerView.ViewHolder {
         mHolderView = (MaterialCardView) itemView;
     }
     public void initialize(BasketItem item) {
+        mBasketItem = item;
         ((TextView) mHolderView.findViewById(R.id.quantity_view))
                 .setText(Double.toString(item.getRoundedQuantity(2)) + item.getRateUnit());
         ((TextView) mHolderView.findViewById(R.id.basket_item_view))
