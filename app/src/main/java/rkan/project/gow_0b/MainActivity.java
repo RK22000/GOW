@@ -7,11 +7,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
@@ -29,13 +35,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         Toolbar toolbar = findViewById(R.id.appBar);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            /**
-             * This method will be invoked when a menu item is clicked if the item itself did
-             * not already handle the event.
-             *
-             * @param item {@link MenuItem} that was clicked
-             * @return <code>true</code> if the event was handled, <code>false</code> otherwise.
-             */
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
@@ -46,6 +45,22 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                 return false;
             }
         });
+
+        TabLayout bbTabs = findViewById(R.id.bbTabLayout);
+        new TabLayoutMediator(bbTabs, brochureBasketPager, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull @NotNull TabLayout.Tab tab, int position) {
+                switch (position) {
+                    case 0:
+                        tab.setText("Brochure");
+                        tab.setIcon(R.drawable.ic_brochure);
+                        break;
+                    default:
+                        tab.setText("Basket");
+                        tab.setIcon(R.drawable.ic_basket);
+                }
+            }
+        }).attach();
     }
 
     @Override
