@@ -29,7 +29,8 @@ import org.jetbrains.annotations.NotNull;
  * create an instance of this fragment.
  */
 public class BrochureFragment extends Fragment {
-    private static final String ARG_PARAM1 = "Param for parent activity";
+    private static final String ARG_PARAM1 = "Param for parent activity"
+            , LOG_TAG = "BrochureFragment";
 
     private BrochureViewAdapter mBrochureViewAdapter;
     private MainActivity mParentActivity;
@@ -72,10 +73,20 @@ public class BrochureFragment extends Fragment {
                 new ViewModelProvider(mParentActivity).get(BrochureBasketModel.class);
 
 
-        brochureBasketModel.getBrochureLiveData().observe(requireActivity(), brochureOrBasket -> {
-            mBrochureViewAdapter.notifyDataSetChanged();
-            Log.d("From BrochFragment", "Brochure Change noted");
-        });
+        brochureBasketModel.getBrochureLiveData().observe(
+                requireActivity(),
+                brochureItems -> {
+                    mBrochureViewAdapter.notifyDataSetChanged();
+                    Log.d(LOG_TAG, "Brochure Change noted");
+                }
+        );
+        brochureBasketModel.getBasketLiveData().observe(
+                requireActivity(),
+                basketItems -> {
+                    mBrochureViewAdapter.notifyDataSetChanged();
+                    Log.d(LOG_TAG, "Basket Change noted");
+                }
+        );
 
         CategoryViewAdapter categoryViewAdapter = new CategoryViewAdapter(requireActivity(),
                 new FilterCallback() {

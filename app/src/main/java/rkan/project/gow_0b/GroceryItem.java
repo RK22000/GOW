@@ -26,9 +26,6 @@ public class GroceryItem implements Serializable {
             itemCategory,
             rateUnit;
     private double itemRate;
-    public boolean inBasket;
-    @Nullable
-    private Object obj;
 
     /**
      * Constructor to initialize a GroceryItem
@@ -42,7 +39,6 @@ public class GroceryItem implements Serializable {
         this.itemCategory = itemCategory;
         this.rateUnit = rateUnit;
         this.itemRate = itemRate;
-        inBasket = false;
     }
 
     public boolean itemIsQuantized() {
@@ -106,9 +102,6 @@ public class GroceryItem implements Serializable {
         if (rateUnit != null && !rateUnit.equals("")) {  // notNull and not""
             itemString.append("/")
                     .append(rateUnit);
-        }
-        if(inBasket) {
-            itemString.append("\nIN Basket");
         }
         return itemString.toString();
     }

@@ -105,49 +105,6 @@ implements FilterAdapter{
     }
 }
 
-class BrochureItemViewHolder extends RecyclerView.ViewHolder {
-    GroceryItem mBrochureItem;
-    MaterialCardView mHolderView;
-    public BrochureItemViewHolder(@NonNull @NotNull View itemView) {
-        super(itemView);
-        mHolderView = (MaterialCardView)itemView;
-    }
-    public void initialize(GroceryItem groceryItem) {
-        mBrochureItem = groceryItem;
-        ((TextView)mHolderView.findViewById(R.id.groceryText)).setText(mBrochureItem.toString());
-        //markIfInBasket();
-    }
-
-    private boolean markIfInBasket() {
-        TextView display = mHolderView.findViewById(R.id.groceryText);
-        if (mBrochureItem.inBasket) {
-            display.setTextColor(Color.GREEN);
-            return true;
-        } else {
-            display.setTextColor(Color.GRAY);
-            return false;
-        }
-    }
-
-    public boolean markIfInBasket(boolean inBasket) {
-        TextView display = mHolderView.findViewById(R.id.groceryText);
-        mHolderView.setChecked(inBasket);
-        if (inBasket) {
-            display.setTextColor(Color.GREEN);
-            return true;
-        } else {
-            display.setTextColor(Color.GRAY);
-            return false;
-        }
-    }
-
-    public GroceryItem getGroceryItem() {
-        return mBrochureItem;
-    }
-    public void setOnClickListener(View.OnClickListener listener) {
-        mHolderView.setOnClickListener(listener);
-    }
-}
 
 class BrochureItemCardViewHolder extends RecyclerView.ViewHolder {
     MaterialCardView mHolderView;
