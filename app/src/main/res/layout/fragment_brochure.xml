@@ -31,12 +31,14 @@
         android:layout_marginEnd="8dp"
         android:text="@string/brochure_title_maratish"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/category_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

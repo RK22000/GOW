@@ -14,9 +14,11 @@
         android:layout_marginTop="16dp"
         android:text="@string/basket_title_view"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="16dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/basketRecyclerView"
@@ -44,6 +46,7 @@
 
     <Button
         android:id="@+id/basketExportButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -54,10 +57,13 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/basketTitleView" />
+        app:layout_constraintTop_toBottomOf="@+id/basketTitleView"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp" />
 
     <Button
         android:id="@+id/exportTextButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -68,6 +74,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/basketExportButton"
-        app:layout_constraintTop_toTopOf="@+id/basketExportButton" />
+        app:layout_constraintTop_toTopOf="@+id/basketExportButton"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
