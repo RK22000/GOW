@@ -97,7 +97,17 @@ public class BrochureFragment extends Fragment {
                 mBrochureRecycler.setAdapter(categoryViewAdapter);
             }
         });
-
+        mParentActivity.addOnBackPressedCallback(new MainActivity.onBackPressedCallback() {
+            @Override
+            public boolean onBackPressed() {
+                if (mBrochureRecycler.getAdapter().getClass().getName().equals(BrochureViewAdapter.class.getName())) {
+                    Log.d("BrochureFragment", "Handling MainActivity Back pressed event");
+                    categoryButton.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
         EditText filterTextView = view.findViewById(R.id.filterText);
 
         filterTextView.addTextChangedListener(new TextWatcher() {

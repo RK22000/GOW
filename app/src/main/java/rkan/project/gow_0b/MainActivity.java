@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements Serializable {
 
@@ -55,18 +56,30 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         return super.onCreateOptionsMenu(menu);
     }
 
+    // BackPress handling
+    public static interface onBackPressedCallback{
+        /**
+         * @return true if BackPressed event was handled
+         */
+        public boolean onBackPressed();
+    }
+    private final ArrayList<onBackPressedCallback> backPressedCallbacks = new ArrayList<>();
+    public void addOnBackPressedCallback(onBackPressedCallback callback) {
+        backPressedCallbacks.add(callback);
+    }
     @Override
     public void onBackPressed() {
         if (brochureBasketPager.getCurrentItem() == 1) {
             brochureBasketPager.setCurrentItem(0);
         } else {
+            for (onBackPressedCallback callback :
+                    backPressedCallbacks) {
+                if (callback.onBackPressed()) {
+                    return;
+                }
+            }
             super.onBackPressed();
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d("MainActivity", "Main activity destroyed");
-    }
 }
