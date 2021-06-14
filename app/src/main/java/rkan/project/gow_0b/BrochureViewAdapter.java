@@ -19,7 +19,7 @@ import com.google.android.material.card.MaterialCardView;
 
 import org.jetbrains.annotations.NotNull;
 
-public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemViewHolder>
+public class BrochureViewAdapter extends RecyclerView.Adapter<BrochureItemCardViewHolder>
 implements FilterAdapter{
 
     public static final String DIALOG_TAG = "From Brochure";
@@ -78,17 +78,21 @@ implements FilterAdapter{
     @NonNull
     @NotNull
     @Override
-    public BrochureItemViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent
+    public BrochureItemCardViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent
             , int viewType) {
         View basketItemView = mInflater.inflate(R.layout.grocery_item_view, parent, false);
-        return new BrochureItemViewHolder(basketItemView);
+        MaterialCardView brochureItemView = BrochureItemCardViewHolder.inflate(
+                mInflater,
+                parent
+        );
+        return new BrochureItemCardViewHolder(brochureItemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull BrochureItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull @NotNull BrochureItemCardViewHolder holder, int position) {
         holder.initialize(mFilteredBrochure.get(position));
         holder.markIfInBasket(mBBModel.getBasketLiveData().getValue().contains(holder.getGroceryItem()));
-        holder.setOnClickListener(view -> {
+        holder.getView().setOnClickListener(view -> {
             QuantitySelectionDialogFragment dialogFragment = new
                     QuantitySelectionDialogFragment(holder.getGroceryItem(), mBBModel);
             dialogFragment.show(mParentFragment.getSupportFragmentManager(), DIALOG_TAG);
@@ -142,5 +146,47 @@ class BrochureItemViewHolder extends RecyclerView.ViewHolder {
     }
     public void setOnClickListener(View.OnClickListener listener) {
         mHolderView.setOnClickListener(listener);
+    }
+}
+
+class BrochureItemCardViewHolder extends RecyclerView.ViewHolder {
+    MaterialCardView mHolderView;
+    GroceryItem mGroceryItem;
+    public static MaterialCardView inflate(LayoutInflater inflater, ViewGroup parent) {
+        return (MaterialCardView) inflater.inflate(
+                R.layout.cardview_brochure_item,
+                parent,
+                false);
+    }
+    public BrochureItemCardViewHolder(@NonNull @NotNull View itemView) {
+        super(itemView);
+        mHolderView = (MaterialCardView) itemView;
+    }
+    public void initialize(GroceryItem item) {
+        mGroceryItem = item;
+
+        ((TextView) mHolderView.findViewById(R.id.brochure_item_view))
+                .setText(mGroceryItem.getItemName());
+        ((TextView) mHolderView.findViewById(R.id.brochure_category_view))
+                .setText(mGroceryItem.getItemCategory());
+        ((TextView) mHolderView.findViewById(R.id.rate_view))
+                .setText(mGroceryItem.CURRENCY.concat(mGroceryItem.getStringItemRate()));
+        String rateUnit;
+        if (!(rateUnit = mGroceryItem.getRateUnit()).equals("")) {
+            rateUnit = "/".concat(rateUnit);
+        } else {
+            rateUnit = null;
+        }
+        ((TextView) mHolderView.findViewById(R.id.rate_unit_view))
+                .setText(rateUnit);
+    }
+    public MaterialCardView getView() {
+        return mHolderView;
+    }
+    public GroceryItem getGroceryItem() {
+        return mGroceryItem;
+    }
+    public void markIfInBasket(boolean inBasket) {
+        mHolderView.setChecked(inBasket);
     }
 }

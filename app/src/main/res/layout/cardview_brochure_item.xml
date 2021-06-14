@@ -2,46 +2,43 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:checkable="true"
+    style="@style/Widget.MaterialComponents.CardView">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <TextView
-            android:id="@+id/quantity_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="42 kg"
-            style="@style/Theme.Mat_1.CardViewHeading" />
-
-        <TextView
-            android:id="@+id/basket_item_view"
+            android:id="@+id/brochure_item_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="Brinjal"
             style="@style/Theme.Mat_1.CardViewHeading"/>
-
         <TextView
-            android:id="@+id/basket_category_view"
+            android:id="@+id/brochure_category_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/basket_item_view"
+            android:layout_below="@id/brochure_item_view"
             android:text="Vegetables"
             style="@style/Theme.Mat_1.CardViewSubHeading"/>
         <TextView
-            android:id="@+id/item_cost_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:id="@+id/rate_view"
+            android:layout_alignParentRight="true"
+            android:layout_alignBaseline="@id/brochure_item_view"
+            style="@style/Theme.Mat_1.CardViewHeading"
+            android:text="@string/Rs"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rate_unit_view"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/rate_view"
             style="@style/Theme.Mat_1.CardViewSubHeading"
-            android:text="@string/Rs"
-            android:layout_below="@id/quantity_view"
-            android:layout_alignParentRight="true" />
-
+            android:text="/kg"/>
     </RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

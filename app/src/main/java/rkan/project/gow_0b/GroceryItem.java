@@ -21,7 +21,10 @@ import java.math.RoundingMode;
  * Implements Serializable so that it can
  */
 public class GroceryItem implements Serializable {
-    private final String itemName, itemCategory, rateUnit;
+    public static final String CURRENCY = "\u20B9";
+    private final String itemName,
+            itemCategory,
+            rateUnit;
     private double itemRate;
     public boolean inBasket;
     @Nullable
@@ -63,6 +66,10 @@ public class GroceryItem implements Serializable {
 
     public double getRoundedItemRate(int digitsForRounding) {
         return new BigDecimal(itemRate).setScale(digitsForRounding, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    public String getStringItemRate() {
+        return Double.toString(getRoundedItemRate(2));
     }
 
     public String getItemCategory() {
