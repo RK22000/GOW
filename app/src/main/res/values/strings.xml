@@ -6,4 +6,5 @@
     <string name="hello_blank_fragment">Hello blank brochure fragment</string>
     <string name="hello_basket_fragment">Hello basket fragment</string>
     <string name="basket_title_view">Basket</string>
+    <string name="place_order">Place Order</string>
 </resources>

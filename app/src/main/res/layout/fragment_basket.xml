@@ -11,14 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/basket_title_view"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="16dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/basketRecyclerView"
@@ -28,12 +28,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/exportTextButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/priceView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/priceView" />
 
     <TextView
         android:id="@+id/priceView"
@@ -42,40 +41,39 @@
         android:text="Full Price no bargaining = x"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/basketExportButton" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/basketExportButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:text="Export Basket File"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/exportTextButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/basketTitleView"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="8dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/exportTextButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginEnd="16dp"
-        android:text="Export Basket Text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintBottom_toBottomOf="@+id/basketExportButton"
+        android:layout_marginRight="16dp"
+        android:text="@string/place_order"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/basketExportButton"
-        app:layout_constraintTop_toTopOf="@+id/basketExportButton"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp" />
+        app:layout_constraintStart_toEndOf="@+id/basketExportButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
