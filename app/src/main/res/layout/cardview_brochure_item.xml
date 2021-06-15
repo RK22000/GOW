@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:checkable="true"
-    style="@style/Widget.MaterialComponents.CardView">
+    style="@style/Widget.MaterialComponents.CardView"
+    app:checkedIcon="@drawable/ic_checked_invisible">
 
     <RelativeLayout
         android:layout_width="match_parent"

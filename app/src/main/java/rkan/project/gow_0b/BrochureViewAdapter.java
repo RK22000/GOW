@@ -144,7 +144,7 @@ class BrochureItemCardViewHolder extends RecyclerView.ViewHolder {
         return mGroceryItem;
     }
     public void markIfInBasket(boolean inBasket) {
-        //mHolderView.setChecked(inBasket);
+        mHolderView.setChecked(inBasket);
         int visibility;
         if (inBasket){
             visibility = View.VISIBLE;
