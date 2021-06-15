@@ -43,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
                         tab.setIcon(R.drawable.ic_brochure);
                         break;
                     default:
-                        tab.setText("Basket");
-                        tab.setIcon(R.drawable.ic_basket);
+                        tab.setText("Cart");
+                        tab.setIcon(R.drawable.ic_shopping_cart);
                 }
             }
         }).attach();
