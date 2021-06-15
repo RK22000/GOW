@@ -7,4 +7,11 @@
         <item name="android:textAppearance">?attr/textAppearanceBody1</item>
         <item name="android:textColor">?attr/colorSecondary</item>
     </style>
+    <style name="Theme.Mat_1.Button_Outlined"
+        parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
+    </style>
+    <style name="Theme.Mat_1.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
+    </style>
 </resources>
