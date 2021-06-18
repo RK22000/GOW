@@ -11,6 +11,11 @@
         parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
     </style>
+    <style name="Theme.Mat_1.Button_Filled">
+        <item name="backgroundTint">?attr/colorPrimaryVariant</item>
+        <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+    </style>
     <style name="Theme.Mat_1.Button" parent="Widget.MaterialComponents.Button">
         <item name="android:textAppearance">?attr/textAppearanceHeadline6</item>
     </style>

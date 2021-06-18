@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewHolder>
-implements FilterAdapter{
+        implements FilterAdapter{
+    public static final String ALL_Categories = "All Items";
     private final LayoutInflater mInflater;
     private final BrochureBasketModel mBBModel;
     private final LiveData<List<String>> mLiveCategories;

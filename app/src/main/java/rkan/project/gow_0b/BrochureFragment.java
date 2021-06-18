@@ -88,6 +88,7 @@ public class BrochureFragment extends Fragment {
                 }
         );
 
+        Button categoryButton = view.findViewById(R.id.category_button);
         CategoryViewAdapter categoryViewAdapter = new CategoryViewAdapter(requireActivity(),
                 new FilterCallback() {
                     @Override
@@ -98,14 +99,17 @@ public class BrochureFragment extends Fragment {
                         String brochureTitle = category.equals("All Categories")?
                                 getString(R.string.brochure_title_maratish):
                                 category;
-                        ((TextView)view.findViewById(R.id.brochureTitleView)).setText(brochureTitle);
+                        //((TextView)view.findViewById(R.id.brochureTitleView)).setText(brochureTitle);
+                        categoryButton.setVisibility(View.VISIBLE);
+                        view.findViewById(R.id.brochureTitleView).setVisibility(View.GONE);
                     }
                 });
-        Button categoryButton = view.findViewById(R.id.category_button);
         categoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View clickedView) {
                 mBrochureRecycler.setAdapter(categoryViewAdapter);
+                categoryButton.setVisibility(View.GONE);
+                view.findViewById(R.id.brochureTitleView).setVisibility(View.VISIBLE);
             }
         });
         mParentActivity.addOnBackPressedCallback(new MainActivity.onBackPressedCallback() {

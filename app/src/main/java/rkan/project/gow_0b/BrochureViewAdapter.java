@@ -47,7 +47,7 @@ implements FilterAdapter{
 
     public void setCategoryFilter(String newFilter){
         categoryFilter = newFilter;
-        if (categoryFilter.equals("All Categories")) {
+        if (categoryFilter.equals(CategoryViewAdapter.ALL_Categories)) {
             categoryFilter = null;
         }
         setmFilteredBrochure();

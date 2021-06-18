@@ -7,4 +7,7 @@
     <string name="hello_basket_fragment">Hello basket fragment</string>
     <string name="basket_title_view">Basket</string>
     <string name="place_order">Place Order</string>
+    <string name="see_categories">See Categories</string>
+    <string name="categories">Catalog</string>
+    <string name="category_return">Back to Catalog</string>
 </resources>

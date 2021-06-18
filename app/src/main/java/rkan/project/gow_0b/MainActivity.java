@@ -71,15 +71,16 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     public void onBackPressed() {
         if (brochureBasketPager.getCurrentItem() == 1) {
             brochureBasketPager.setCurrentItem(0);
-        } else {
-            for (onBackPressedCallback callback :
-                    backPressedCallbacks) {
-                if (callback.onBackPressed()) {
-                    return;
-                }
-            }
-            super.onBackPressed();
+            return;
         }
+        for (onBackPressedCallback callback :
+                backPressedCallbacks) {
+            if (callback.onBackPressed()) {
+                return;
+            }
+        }
+            getCurrentFocus().clearFocus();
+            super.onBackPressed();
     }
 
 }

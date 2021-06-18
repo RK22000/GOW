@@ -102,7 +102,7 @@ public class BrochureBasketModel extends AndroidViewModel implements Serializabl
     // TODO: make this a method of the basket so category list is obtained from the basket
     private void categorizeBrochure() {
         TreeSet<String> categorySet = new TreeSet<>();
-        categorySet.add("All Categories");
+        categorySet.add(CategoryViewAdapter.ALL_Categories);
         for (GroceryItem g :
                 brochureLiveData.getValue()) {
             categorySet.add(g.getItemCategory());
