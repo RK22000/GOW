@@ -17,7 +17,7 @@
     <style name="Theme.Mat_1" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryVariant">@color/primaryLightColor</item>
+        <item name="colorPrimaryVariant">@color/primaryLightColorAlternativeMummySuggestion</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorOnPrimary">@color/primaryTextColor</item>
         <!-- Secondary brand color. -->
